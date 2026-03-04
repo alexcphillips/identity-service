@@ -4,6 +4,11 @@ interface Env {
   NODE_ENV: NodeEnv;
   PORT: number;
   JWT_SECRET: string;
+  DB_USER: string;
+  DB_PASSWORD: string;
+  DB_PORT: number;
+  DB_HOST: string;
+  DB_NAME: string;
 }
 
 function requireEnv(name: string): string {
@@ -45,7 +50,6 @@ export const env: Env = {
   PORT: parsePort(process.env.PORT || "3000"),
   JWT_SECRET: (() => {
     const secret = requireEnv("JWT_SECRET");
-
     if (secret.length < 32) {
       console.error("JWT_SECRET must be at least 32 characters long");
       process.exit(1);
@@ -53,4 +57,9 @@ export const env: Env = {
 
     return secret;
   })(),
+  DB_USER: String(process.env.DB_USER),
+  DB_PASSWORD: String(process.env.DB_PASSWORD),
+  DB_PORT: Number(process.env.DB_PORT),
+  DB_HOST: String(process.env.DB_HOST),
+  DB_NAME: String(process.env.DB_NAME),
 };
